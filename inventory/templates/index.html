@@ -1,0 +1,63 @@
+<!-- inherit base.html into index-->
+{% extends 'base.html' %}
+
+<!-- replace body from base.html-->
+{% block body %}
+
+<br>
+
+    <div class="button-group">
+      <a href="{% url 'display_kitchenware' %}" class="btn btn-primary btn-md btn-trim" role="button"> Kitchenware</a>
+      <a href="{% url 'add_kitchenware' %}" class="btn btn-warning btn-sm" role="button"> +</a>
+
+      <a href="{% url 'display_chicken' %}" class="btn btn-primary btn-md" role="button"> Chicken</a>
+      <a href="{% url 'add_chicken' %}" class="btn btn-warning btn-sm" role="button"> +</a>
+
+    </div>
+ <br>
+
+
+  <h4>Currently Viewing {{ header }}</h4>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>Category</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       {% for item in items %}
+
+      <tr>
+        <td>{{ item.pk }}
+        <td>{{ item.category }}</td>
+        <td>{{ item.product }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.status }}</td>
+        
+          
+       {% if header|lower == "kitchenware" %}
+        <td>
+            <a href="{% url 'edit_kitchenware' item.pk %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'delete_kitchenware' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x</a>
+        </td>
+        {% else %}
+        <td>
+            <a href="{% url 'edit_chicken' item.pk %}" class="btn btn-warning btn-sm" role="button" aria-pressed="true" > Edit</a>
+            <a href="{% url 'delete_chicken' item.pk%}" class="btn btn-danger btn-sm" role="button" aria-pressed="true" > x</a>
+        </td>
+        
+        {% endif %}
+
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
